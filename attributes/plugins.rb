@@ -1,7 +1,10 @@
-Chef::Log.debug "Attempting to load plugin list from the databag..."
+Chef::Log.debug 'Attempting to load plugin list from the databag...'
 
-plugins = Chef::DataBagItem.load('elasticsearch', 'plugins')[node.chef_environment].to_hash['plugins'] rescue {}
-
+begin
+  plugins = Chef::DataBagItem.load('elasticsearch', 'plugins')[node.chef_environment].to_hash['plugins']
+rescue
+  plugins = {}
+end
 node.default.elasticsearch[:plugins].merge!(plugins)
 node.default.elasticsearch[:plugin][:mandatory] = []
 
