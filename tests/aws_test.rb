@@ -4,10 +4,10 @@ describe_recipe 'elasticsearch::aws' do
   include MiniTest::Chef::Context
   include MiniTest::Chef::Resources
 
-  cluster_url = 'http://localhost:9200'
-  health_url  = "#{cluster_url}/_cluster/health"
+#  cluster_url = 'http://localhost:9200'
+#  health_url  = "#{cluster_url}/_cluster/health"
 
-  proxy_url   = 'http://USERNAME:PASSWORD@localhost:8080'
+#  proxy_url   = 'http://USERNAME:PASSWORD@localhost:8080'
 
   it 'creates the directory' do
     if node.recipes.include?('elasticsearch::aws')

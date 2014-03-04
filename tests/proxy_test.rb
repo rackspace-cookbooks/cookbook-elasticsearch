@@ -7,7 +7,7 @@ describe_recipe 'elasticsearch::proxy' do
   cluster_url = 'http://localhost:9200'
   health_url  = "#{cluster_url}/_cluster/health"
 
-  proxy_url   = 'http://USERNAME:PASSWORD@localhost:8080'
+#  proxy_url   = 'http://USERNAME:PASSWORD@localhost:8080'
 
   it 'runs as a daemon' do
     service('nginx').must_be_running

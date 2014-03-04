@@ -7,7 +7,7 @@ describe_recipe 'elasticsearch::default' do
   describe 'Installation' do
 
     it 'installs libraries to versioned directory' do
-      version = node[:elasticsearch][:version]
+    #  version = node[:elasticsearch][:version]
 
       directory("/usr/local/elasticsearch-#{node[:elasticsearch][:version]}"
     ).must_exist.with(:owner, 'elasticsearch')

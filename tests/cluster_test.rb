@@ -44,7 +44,7 @@ describe_recipe 'elasticsearch::default' do
       # Insert test data
       system(%Q|curl --silent --show-error -X PUT #{cluster_url}/test_chef_cookbook -d '{"index":{"number_of_shards":1,"number_of_replicas":0}}'|)
       (1..5).each do |num|
-        test_uri = URI.parse "#{cluster_url}/test_chef_cookbook/document/#{num}"
+       # test_uri = URI.parse "#{cluster_url}/test_chef_cookbook/document/#{num}"
         system(%Q|curl --silent --show-error -X PUT #{cluster_url}/test_chef_cookbook/document/#{num} -d '{ "title": "Test #{num}", "time": "#{Time.now.utc}", "enabled": true }'|)
       end
       system("curl --silent --show-error -X POST #{cluster_url}/test_chef_cookbook/_refresh")
