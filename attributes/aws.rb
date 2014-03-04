@@ -54,4 +54,4 @@ rescue
   default.elasticsearch[:cloud][:aws][:region]         = nil
   default.elasticsearch[:cloud][:aws][:ec2][:endpoint] = nil
 end
-default.elasticsearch[:cloud][:node][:auto_attributes] = true
+default.elasticsearch['cloud']['node']['auto_attributes'] = true

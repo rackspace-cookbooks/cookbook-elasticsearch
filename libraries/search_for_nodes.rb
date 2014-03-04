@@ -38,7 +38,7 @@ module Extensions
   end
 
   def find_matching_nodes(query = nil)
-    query ||= "roles:elasticsearch AND chef_environment:#{node.chef_environment} AND elasticsearch_cluster_name:#{node[:elasticsearch][:cluster][:name]}"
+    query ||= "roles:elasticsearch AND chef_environment:#{node.chef_environment} AND elasticsearch_cluster_name:#{node.elasticsearch.cluster.name}"
     results = []
     Chef::Log.debug("Searching for nodes with query: \"#{query}\"")
     Chef::Search::Query.new.search(:node, query) { |o| results << o }
@@ -58,12 +58,12 @@ module Extensions
       value
     else
       if node.key? 'cloud'
-        node['cloud'].key? 'local_ipv4'
-        value = node['cloud']['local_ipv4']
+        node.cloud.key? 'local_ipv4'
+        value = node.cloud.local_ipv4
         Chef::Log.debug("Selected attribute: \"cloud.local_ipv4\" for node: #{node.name.inspect} with value: #{value.inspect}")
         value
       else
-        value = node['ipaddress']
+        value = node.ipaddress
         Chef::Log.debug("Selected attribute: \"ipaddress\" for node: #{node.name.inspect} with value: #{value.inspect}")
         value
       end
