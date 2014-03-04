@@ -95,11 +95,7 @@
 # Note, that you have to verify the path to the device file: in some environments, these will
 # have the format of `/dev/sd*`, on others `/dev/xvd*`, etc.
 #
-begin
-  data = Chef::DataBagItem.load('elasticsearch', 'data')[node.chef_environment]
-rescue
-  data = {}
-end
+data = Chef::DataBagItem.load('elasticsearch', 'data')[node.chef_environment] rescue {}
 
 default.elasticsearch[:data][:devices] = data['devices'] || {}
 

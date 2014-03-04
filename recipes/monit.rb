@@ -1,14 +1,14 @@
 # Add Monit configuration file via the `monitrc` definition
 #
 begin
-  monitrc 'elasticsearch' do
-    template_cookbook 'elasticsearch'
-    template_source   'elasticsearch.monitrc.conf.erb'
-    source            'elasticsearch.monitrc.conf.erb'
+  monitrc "elasticsearch" do
+    template_cookbook "elasticsearch"
+    template_source   "elasticsearch.monitrc.conf.erb"
+    source            "elasticsearch.monitrc.conf.erb"
   end
-rescue
+rescue Exception => e
   Chef::Log.error "The 'monit' recipe is not included in the node run_list or the 'monitrc' resource is not defined"
-  puts "The 'monit' recipe is not included in the node run_list or the 'monitrc' resource is not defined"
+  raise e
 end
 
 # NOTE: On some systems, notably Amazon Linux, Monit installed from packages
