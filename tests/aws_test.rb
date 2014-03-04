@@ -7,12 +7,11 @@ describe_recipe 'elasticsearch::aws' do
   cluster_url = 'http://localhost:9200'
   health_url  = "#{cluster_url}/_cluster/health"
 
-  proxy_url   = "http://USERNAME:PASSWORD@localhost:8080"
+  proxy_url   = 'http://USERNAME:PASSWORD@localhost:8080'
 
-
-  it "creates the directory" do
-    if node.recipes.include?("elasticsearch::aws")
-      directory("/usr/local/elasticsearch/plugins/cloud-aws/").must_exist.with(:owner, 'elasticsearch')
+  it 'creates the directory' do
+    if node.recipes.include?('elasticsearch::aws')
+      directory('/usr/local/elasticsearch/plugins/cloud-aws/').must_exist.with(:owner, 'elasticsearch')
     end
   end
 

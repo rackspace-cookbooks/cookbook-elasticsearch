@@ -11,29 +11,29 @@ describe_recipe 'elasticsearch::default' do
   cluster_url = 'http://localhost:9200'
   health_url  = "#{cluster_url}/_cluster/health"
 
-  describe "Cluster health" do
+  describe 'Cluster health' do
 
-    it "is not red" do
+    it 'is not red' do
       # Let's wait until the service is alive
       timeout = 120
-      until system("curl --silent --show-error '#{health_url}?wait_for_status=yellow&timeout=1m'") or timeout == 0
+      until system("curl --silent --show-error '#{health_url}?wait_for_status=yellow&timeout=1m'") || timeout == 0
         sleep 1
         timeout -= 1
       end
 
       resp = Net::HTTP.get_response URI.parse(health_url)
       status = JSON.parse(resp.read_body)['status']
-      assert status != "red"
+      assert status != 'red'
     end
 
   end
 
-  describe "Indexing and searching" do
+  describe 'Indexing and searching' do
 
-    it "writes test data and retrieves them" do
+    it 'writes test data and retrieves them' do
       # Let's wait until the service is alive
       timeout = 120
-      until system("curl --silent --show-error '#{health_url}?wait_for_status=yellow&timeout=1m'") or timeout == 0
+      until system("curl --silent --show-error '#{health_url}?wait_for_status=yellow&timeout=1m'") || timeout == 0
         sleep 1
         timeout -= 1
       end
