@@ -6,7 +6,7 @@ begin
     template_source   'elasticsearch.monitrc.conf.erb'
     source            'elasticsearch.monitrc.conf.erb'
   end
-rescue Exception => e
+rescue StandardError => e
   Chef::Log.error "The 'monit' recipe is not included in the node run_list or the 'monitrc' resource is not defined"
   raise e
 end

@@ -16,8 +16,6 @@ recommends 'monit'
 
 provides 'elasticsearch'
 provides 'elasticsearch::data'
-provides 'elasticsearch::ebs'
-provides 'elasticsearch::aws'
 provides 'elasticsearch::nginx'
 provides 'elasticsearch::proxy'
 provides 'elasticsearch::plugins'

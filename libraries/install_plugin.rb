@@ -35,14 +35,16 @@ module Extensions
       block do
         version = params['version'] ? "/#{params['version']}" : nil
         url     = params['url']     ? " -url #{params['url']}" : nil
-
-        command = "/usr/local/bin/plugin -install #{name}#{version}#{url}"
+        command = Mixlib::ShellOut.new("/usr/local/bin/plugin -install #{name}#{version}#{url}")
+        command.run_command
+        command.error!
         Chef::Log.debug command
 
-        fail '[!] Failed to install plugin' unless system command
-
         # Ensure proper permissions
-        fail '[!] Failed to set permission' unless system "chown -R #{node.elasticsearch[:user]}:#{node.elasticsearch[:user]} #{node.elasticsearch[:dir]}/elasticsearch-#{node.elasticsearch[:version]}/plugins/"
+        command = Mixlib::ShellOut.new("chown -R #{node.elasticsearch[:user]}:#{node.elasticsearch[:user]} .
+        command >> #{node.elasticsearch[:dir]}/elasticsearch-#{node.elasticsearch[:version]}/plugins/")
+        command.run_command
+        command.error!
       end
 
       notifies :restart, 'service[elasticsearch]' unless node.elasticsearch[:skip_restart]
