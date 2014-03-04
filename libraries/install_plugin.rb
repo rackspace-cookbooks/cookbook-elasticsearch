@@ -1,5 +1,5 @@
+# Module Extensions
 module Extensions
-
   # Install an Elasticsearch plugin
   #
   # In the simplest form, just pass a plugin name in the GitHub <user>/<repo> format:
@@ -30,8 +30,7 @@ module Extensions
   #
   # See <http://wiki.opscode.com/display/chef/Setting+Attributes+(Examples)> for more info.
   #
-  def install_plugin name, params={}
-
+  def install_plugin(name, params = {})
     ruby_block "Install plugin: #{name}" do
       block do
         version = params['version'] ? "/#{params['version']}" : nil
@@ -40,23 +39,25 @@ module Extensions
         command = "/usr/local/bin/plugin -install #{name}#{version}#{url}"
         Chef::Log.debug command
 
-        raise "[!] Failed to install plugin" unless system command
+        fail '[!] Failed to install plugin' unless system command
 
         # Ensure proper permissions
-        raise "[!] Failed to set permission" unless system "chown -R #{node.elasticsearch[:user]}:#{node.elasticsearch[:user]} #{node.elasticsearch[:dir]}/elasticsearch-#{node.elasticsearch[:version]}/plugins/"
+        fail '[!] Failed to set permission' unless system "chown -R #{node.elasticsearch[:user]}:#{node.elasticsearch[:user]} #{node.elasticsearch[:dir]}/elasticsearch-#{node.elasticsearch[:version]}/plugins/"
       end
 
       notifies :restart, 'service[elasticsearch]' unless node.elasticsearch[:skip_restart]
 
       not_if do
-        Dir.entries("#{node.elasticsearch[:dir]}/elasticsearch-#{node.elasticsearch[:version]}/plugins/").any? do |plugin|
-          next if plugin =~ /^\./
-          name.include? plugin
-        end rescue false
+        begin
+          Dir.entries("#{node.elasticsearch[:dir]}/elasticsearch-#{node.elasticsearch[:version]}/plugins/").any? do |plugin|
+            next if plugin =~ /^\./
+            name.include? plugin
+          end
+        rescue
+          name = false
+        end
       end
 
     end
-
   end
-
 end

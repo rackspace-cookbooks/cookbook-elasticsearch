@@ -3,7 +3,11 @@ include_attribute 'elasticsearch::plugins'
 
 # Load configuration and credentials from data bag 'elasticsearch/aws' -
 #
-aws = Chef::DataBagItem.load('elasticsearch', 'aws')[node.chef_environment] rescue {}
+begin
+  aws = Chef::DataBagItem.load('elasticsearch', 'aws')[node.chef_environment]
+rescue
+  aws = {}
+end
 # ----------------------------------------------------------------------
 
 # To use the AWS discovery, you have to properly set up the configuration,
@@ -29,14 +33,25 @@ default.elasticsearch['plugins']['elasticsearch/elasticsearch-cloud-aws']['versi
 # AWS configuration is set based on data bag values.
 # You may choose to configure them in your node configuration instead.
 #
-default.elasticsearch[:gateway][:type]               = ( aws['gateway']['type']                rescue nil )
-default.elasticsearch[:discovery][:type]             = ( aws['discovery']['type']              rescue nil )
-default.elasticsearch[:discovery][:ec2][:groups]     = ( aws['discovery']['ec2']['groups']     rescue nil )
-default.elasticsearch[:discovery][:ec2][:tag]        = ( aws['discovery']['ec2']['tag']        rescue {} )
+begin
+  default.elasticsearch[:gateway][:type]               = ( aws['gateway']['type'])
+  default.elasticsearch[:discovery][:type]             = ( aws['discovery']['type'])
+  default.elasticsearch[:discovery][:ec2][:groups]     = ( aws['discovery']['ec2']['groups'])
+  default.elasticsearch[:discovery][:ec2][:tag]        = ( aws['discovery']['ec2']['tag'])
 
-default.elasticsearch[:cloud][:aws][:access_key]     = ( aws['cloud']['aws']['access_key']     rescue nil )
-default.elasticsearch[:cloud][:aws][:secret_key]     = ( aws['cloud']['aws']['secret_key']     rescue nil )
-default.elasticsearch[:cloud][:aws][:region]         = ( aws['cloud']['aws']['region']         rescue nil )
-default.elasticsearch[:cloud][:aws][:ec2][:endpoint] = ( aws['cloud']['aws']['ec2']['endpoint'] rescue nil )
+  default.elasticsearch[:cloud][:aws][:access_key]     = ( aws['cloud']['aws']['access_key'])
+  default.elasticsearch[:cloud][:aws][:secret_key]     = ( aws['cloud']['aws']['secret_key'])
+  default.elasticsearch[:cloud][:aws][:region]         = ( aws['cloud']['aws']['region'])
+  default.elasticsearch[:cloud][:aws][:ec2][:endpoint] = ( aws['cloud']['aws']['ec2']['endpoint'])
+rescue
+  default.elasticsearch[:gateway][:type]               = nil
+  default.elasticsearch[:discovery][:type]             = nil
+  default.elasticsearch[:discovery][:ec2][:groups]     = nil
+  default.elasticsearch[:discovery][:ec2][:tag]        = {}
 
+  default.elasticsearch[:cloud][:aws][:access_key]     = nil
+  default.elasticsearch[:cloud][:aws][:secret_key]     = nil
+  default.elasticsearch[:cloud][:aws][:region]         = nil
+  default.elasticsearch[:cloud][:aws][:ec2][:endpoint] = nil
+end
 default.elasticsearch[:cloud][:node][:auto_attributes] = true
