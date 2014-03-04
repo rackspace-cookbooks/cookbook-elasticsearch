@@ -1,7 +1,6 @@
-# Module Extensions
 module Extensions
-  # Module Templates
   module Templates
+
     # An extension method for convenient printing of values in ERB templates.
     #
     # The method provides several ways how to evaluate the value:
@@ -28,20 +27,17 @@ module Extensions
     #
     # Do not forget to use an ending dash (`-`) in the ERB block, so lines for missing values are not printed!
     #
-    def print_value(key, value = nil, options = {})
+    def print_value key, value=nil, options={}
       separator = options[:separator] || ': '
       existing_value   = value
 
       # NOTE: A value of `false` is valid, we need to check for `nil` explicitely
-      existing_value = node.elasticsearch[key] if existing_value.nil? && !node.elasticsearch[key].nil?
-      existing_value = node.elasticsearch[key.tr('.', '_')] if existing_value.nil? && !node.elasticsearch[key.tr('.', '_')].nil?
-      begin
-        existing_value = key.to_s.split('.').reduce(node.elasticsearch) { |(result, attr)| result[attr] }
-      rescue
-        existing_value = nil if existing_value.nil?
-      end
+      existing_value = node.elasticsearch[key] if existing_value.nil? and not node.elasticsearch[key].nil?
+      existing_value = node.elasticsearch[key.tr('.', '_')] if existing_value.nil? and not node.elasticsearch[key.tr('.', '_')].nil?
+      existing_value = key.to_s.split('.').inject(node.elasticsearch) { |result, attr| result[attr] } rescue nil if existing_value.nil?
 
       [key, separator, existing_value.to_s, "\n"].join unless existing_value.nil?
     end
+
   end
 end
