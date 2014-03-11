@@ -1,5 +1,5 @@
-include_attribute 'elasticsearch::default'
-include_attribute 'elasticsearch::nginx'
+include_attribute 'rackspace_elasticsearch::default'
+include_attribute 'rackspace_elasticsearch::nginx'
 
 # Try to load data bag item 'elasticsearch/aws' ------------------
 #
