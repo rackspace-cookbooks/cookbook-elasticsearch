@@ -13,3 +13,6 @@ tmp/*
 .rubocop
 .kitchen.yml
 .variables
+.coverage/
+.kitchen/
+.rubocop.yml
