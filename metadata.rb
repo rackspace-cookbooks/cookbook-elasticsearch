@@ -8,8 +8,6 @@ version          '1.0.0'
 
 depends 'ark', '~> 0.2'
 depends 'java', '~> 1.18'
-depends 'rackspace_elasticsearch::curl'
-depends 'rackspace_elasticsearch::nginx'
 recommends 'build-essential'
 recommends 'xml'
 recommends 'java'
