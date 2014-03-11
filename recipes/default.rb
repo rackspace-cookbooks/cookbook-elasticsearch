@@ -4,7 +4,7 @@ Erubis::Context.send(:include, Extensions::Templates)
 
 # elasticsearch = "elasticsearch-#{node.elasticsearch[:version]}"
 
-include_recipe 'elasticsearch::curl'
+include_recipe 'rackspace_elasticsearch::curl'
 include_recipe 'ark'
 
 # Create user and group
