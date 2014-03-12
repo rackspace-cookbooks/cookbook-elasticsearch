@@ -11,8 +11,6 @@ tmp/*
 !tmp/data_bags/.gitignore
 !tmp/data_bags/elasticsearch/settings.json
 .rubocop
-.kitchen.yml
 .variables
 .coverage/
 .kitchen/
-.rubocop.yml
