@@ -14,3 +14,4 @@ tmp/*
 .variables
 .coverage/
 .kitchen/
+.kitchen.yml
