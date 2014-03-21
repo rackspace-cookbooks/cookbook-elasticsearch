@@ -1,25 +1,22 @@
-name             "elasticsearch"
+name             'rackspace_elasticsearch'
+maintainer       'Rackspace'
+maintainer_email 'rackspace-cookbooks@rackspace.com'
+license          'Apache 2.0'
+description      'Installs and configures elasticsearch'
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+version          '1.0.0'
 
-maintainer       "karmi"
-maintainer_email "karmi@karmi.cz"
-license          "Apache"
-description      "Installs and configures elasticsearch"
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.markdown'))
-version          "0.3.7"
-
-depends 'ark'
-
+depends 'ark', '~> 0.2'
+depends 'java', '~> 1.18'
 recommends 'build-essential'
 recommends 'xml'
 recommends 'java'
 recommends 'monit'
 
-provides 'elasticsearch'
-provides 'elasticsearch::data'
-provides 'elasticsearch::ebs'
-provides 'elasticsearch::aws'
-provides 'elasticsearch::nginx'
-provides 'elasticsearch::proxy'
-provides 'elasticsearch::plugins'
-provides 'elasticsearch::monit'
-provides 'elasticsearch::search_discovery'
+provides 'rackspace_elasticsearch'
+provides 'rackspace_elasticsearch::data'
+provides 'rackspace_elasticsearch::nginx'
+provides 'rackspace_elasticsearch::proxy'
+provides 'rackspace_elasticsearch::plugins'
+provides 'rackspace_elasticsearch::monit'
+provides 'rackspace_elasticsearch::search_discovery'
